@@ -1,17 +1,17 @@
-import Fishpi from 'fishpi';
+import Fishpi,{ClientType} from 'fishpi';
 export default {
-  name: '领取昨日奖励',
+  name: '鸽鸽消息相关',
   /**
    * 任务执行时间
    */
-  time: '08:00:00',
+  time: '09:00:00',
   /**
    * 任务执行
    * @param fireDate 任务执行时间
    * @param fishpi FishPi实例
    */
   async exec(fireDate: Date, fishpi: Fishpi) {
-    await fishpi.account.rewardLiveness().then(data => console.log(`领取昨日活跃奖励：${data} 积分`));
+    fishpi.chatroom.send("鸽 行行好吧", ClientType.PC, "PC模拟网络");
   },
   /**
    * 是否启用

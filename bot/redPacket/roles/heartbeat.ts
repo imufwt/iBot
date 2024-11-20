@@ -5,6 +5,10 @@ export default {
   exec({ content: redpack, userName, oId }: ChatMsg, fishpi: Fishpi) {
     redpack = redpack as RedPacket;
     if (redpack.money <= 0) return;
+    
+    console.log(`${userName} 发送了心跳包，金额：${redpack.money}`);
+    console.log(" ----------------------------------------------------------");
+
     // 把心跳包的 oId 存起来
     oIds.push(oId);
 

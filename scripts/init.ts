@@ -13,7 +13,7 @@ async function main() {
       return new Promise((resolve, reject) => {
           try {
               rl.question(`${key} ${(defaultVal ? `[${defaultVal}]` : '')}: `, function (val) {
-                  resolve(val || defaultVal);
+                  resolve(val || String(defaultVal));
               });
           } catch (error) {
               reject(error);

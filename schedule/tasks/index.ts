@@ -22,7 +22,7 @@ export interface Role {
   enable?: boolean,
 }
 
-const roles :Role[] = [];
+const roles: Role[] = [];
 files.forEach(async (file) => {
   file = './' + path.basename(file);
   if (file === './index.ts') return;

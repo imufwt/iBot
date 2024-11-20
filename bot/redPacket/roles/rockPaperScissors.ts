@@ -10,6 +10,9 @@ export default {
   exec({ content: redpack, userName, oId }: ChatMsg, fishpi: Fishpi) {
     redpack = redpack as RedPacket;
 
+    console.log(`${userName} 发送了猜拳红包，金额：${redpack.money}`);
+    console.log(" ----------------------------------------------------------");
+    
     // 预备猜拳
     let points = redpack.money;
     let g = guess(userName);
