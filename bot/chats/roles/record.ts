@@ -18,7 +18,7 @@ export default [{
       if (!key) {
         fishpi.chatroom.send("凌 发红包 " + senderUserName + " "+(Math.floor(Math.random() * 64)+1)+" 行行行,好好好!", ClientType.ElvesOnline, "精灵互联");
         await client.set(senderUserName, "1");
-        await client.expire(senderUserName, Number(diff));
+        await client.expire(senderUserName, Math.floor(diff));
         return;
       }
       // 否则就提示已经存在
