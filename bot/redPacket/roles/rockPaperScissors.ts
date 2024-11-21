@@ -20,7 +20,7 @@ export default {
     console.log(`【${userName}】猜拳，红包金额：${points}，我觉得应该出 ${rps[g]}`);
 
     // 等待猜拳
-    if (points <= 0 || points > 1500) return;
+    if (points <= 0 || points > 256) return;
     timer = setTimeout(() => {
       let g = guess(userName);
       if (g == null) return;

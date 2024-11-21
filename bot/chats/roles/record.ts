@@ -14,15 +14,15 @@ export default [{
     // 查询 标识
     client.get(senderUserName).then(async (key: string | null) => {
       // 如果没有标识，就创建一个
-      if (!key) {
-        await fishpi.chat.send(senderUserName, "诶嘿. 不应该去鸽行行好吧?");
-        fishpi.chatroom.send("凌 发红包 " + senderUserName + " "+(Math.floor(Math.random() * 64)+1)+" 行行行,好好好!", ClientType.ElvesOnline, "精灵互联");
+      if (key) {
+        // 否则就提示已经存在
+        await fishpi.chat.send(senderUserName, "诶嘿. 做人不能太贪心哦~");
+      } else {
+        await fishpi.chat.send(senderUserName, "诶嘿. 不应该是鸽行行好吧?");
+        fishpi.chatroom.send("凌 发红包 " + senderUserName + " " + (Math.floor(Math.random() * 64) + 1) + " 行行行,好好好!", ClientType.ElvesOnline, "精灵互联");
         await client.set(senderUserName, "1");
         await client.expire(senderUserName, Math.floor(diff));
-        return;
       }
-      // 否则就提示已经存在
-      await fishpi.chat.send(senderUserName, "诶嘿. 做人不能太贪心哦~");
     })
       .catch((error) => {
         console.error('Redis error:', error);
