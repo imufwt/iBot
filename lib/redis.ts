@@ -1,35 +1,50 @@
-import {createClient} from '@redis/client';
-import { redisKey, redisDb } from "@/config.json";
+import { createClient } from "redis";
+import { redis } from "../config.json";
 
-// 创建一个Redis客户端
+let client: any;
+export const initRedis = async () => {
+    if (client) return;
+    client = await createClient({
+        url: `redis://${redis.host}:${redis.port}`,
+        password: redis.password,
+        database: redis.db,
+    })
+        .on("error", function (err: any) {
+            console.log("redis error: " + err);
+        })
+        .connect();
+    return client;
+};
 
-// 创建一个Redis客户端
-const client = createClient({
-    url: 'redis://:'+redisKey+'@127.0.0.1:6379/'+redisDb
-});
+export const setKey = async (key: string, value: any, exprires: any = null) => {
+    key = key.toUpperCase();
+    if (!client) await initRedis();
+    value = JSON.stringify(value);
+    const res = await client.set(key, value);
+    //设置过期 单位：秒
+    if (exprires !== null) {
+        await client.expire(key, exprires);
+    }
+};
+export const getKey = async (key: string) => {
+    key = key.toUpperCase();
+    if (!client) await initRedis();
+    const value = await client.get(key);
+    try {
+        return value ? JSON.parse(value) : null;
+    } catch (e) {
+        return value;
+    }
+};
 
-client.on('connect', () => {
-    console.log('Connected to Redis');
-});
+export const getKeys = async (key: string) => {
+    key = key.toUpperCase();
+    if (!client) await initRedis();
+    const value = await client.keys(key);
+    return value;
+};
 
-client.on('error', (err: any) => {
-    console.error('Redis Error:', err);
-});
-
-// 连接Redis客户端
-client.connect().then(() => {
-    console.log('Redis client connected');
-}).catch((err) => {
-    console.error('Failed to connect to Redis:', err);
-});
-
-// 在应用关闭时断开连接
-process.on('exit', () => {
-    client.disconnect().then(() => {
-        console.log('Redis client disconnected');
-    }).catch((err) => {
-        console.error('Failed to disconnect from Redis:', err);
-    });
-});
-
-export { client };
+export const delKey = async (key: string) => {
+    if (!client) await initRedis();
+    await client.del(key);
+};

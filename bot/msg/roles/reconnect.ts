@@ -12,6 +12,7 @@ export default [{
       console.dir(await fishpi.chatroom.reconnect({ timeout : to}));
       console.log(`已重连`, new Date().toLocaleString())
     }, to * 1000);
+    return false;
   },
   enable: true,
 }, {
@@ -24,6 +25,7 @@ export default [{
       console.dir(await fishpi.chatroom.reconnect({ timeout : to }));
       console.log(`已重连`, new Date().toLocaleString())
     }, to * 1000);
+    return false;
   },
   enable: true,
 }]

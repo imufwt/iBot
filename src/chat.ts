@@ -1,4 +1,4 @@
-import Fishpi, { NoticeMsg } from 'fishpi';
+import Fishpi, { NoticeMsg, ClientType } from 'fishpi';
 import { domain } from '../config.json';
 import fetch from 'node-fetch';
 import { Robots } from '@bot/index';
@@ -7,6 +7,7 @@ import * as Schedule from '@schedule/index';
 const fishpi = new Fishpi();
 fishpi.setDomain(domain);
 globalThis.fetch = fetch as any;
+const timer: any = {};
 
 export default {
   async login(config: any) {
@@ -23,6 +24,7 @@ export default {
   async listen(bots: Robots) {
     console.log('聊天室监听中...');
     
+    fishpi.chatroom.setVia(ClientType.ElvesOnline, "S3");
     // 监听聊天室消息
     fishpi.chatroom.addListener(async ({ msg }) => {
       if (!bots[msg.type]) return;
@@ -42,6 +44,23 @@ export default {
     });
 
     Schedule.load(fishpi);
-  }
+  },
+  async chatRoomSend(msg: string, isPre: boolean = false) {
+    if (isPre) {
+      await fishpi.chatroom.send(msg);
+    } else {
+      msg += `<div id="Oops-${new Date().getTime()}"></div>`;
+      await fishpi.chatroom.send(msg);
+    }
+  },
+
+  async sendTo(user: string, msg: string) {
+    await fishpi.chat.send(user, msg);
+    if (timer[user]) clearInterval(timer[user]);
+    timer[user] = setTimeout(() => {
+      fishpi.chat.close(user);
+      delete timer[user];
+    }, 30000);
+  },
 }
 
