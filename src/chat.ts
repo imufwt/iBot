@@ -16,6 +16,7 @@ export default {
     else throw new Error('请提供 token 或者用户名密码');
 
     const rsp = await fishpi.account.info();
+    console.log(`当前登录用户：${rsp}`);
     if (rsp.code) throw new Error(`登录失败：${rsp.msg}`);
     const user = rsp.data!;
     console.log(`登录成功：${user.userName}`);
@@ -27,8 +28,8 @@ export default {
     fishpi.chatroom.setVia(ClientType.ElvesOnline, "S3");
     // 监听聊天室消息
     fishpi.chatroom.addListener(async ({ msg }) => {
+      console.log(msg);
       if (!bots[msg.type]) return;
-
       const { exec } = bots[msg.type];
       if (!exec) return;
 
@@ -49,7 +50,7 @@ export default {
     if (isPre) {
       await fishpi.chatroom.send(msg);
     } else {
-      msg += `<div id="Oops-${new Date().getTime()}"></div>`;
+      msg += `<div id="vmet-${new Date().getTime()}"></div>`;
       await fishpi.chatroom.send(msg);
     }
   },

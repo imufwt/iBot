@@ -11,15 +11,15 @@
   "author": "imufwt",
   "license": "MIT",
   "dependencies": {
-    "fishpi": "^0.0.56",
+    "fishpi": "^0.0.63",
     "glob": "^10.2.3",
     "node-fetch": "<3.0.0",
     "node-localstorage": "^2.2.1",
     "node-schedule": "^2.1.1",
+    "redis": "^4.0.2",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.0.4",
-    "redis":"^4.0.2"
+    "typescript": "^5.0.4"
   },
   "devDependencies": {
     "@types/node": "^18.15.11",

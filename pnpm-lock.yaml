@@ -15,7 +15,7 @@ specifiers:
   typescript: ^5.0.4
 
 dependencies:
-  fishpi: 0.0.56
+  fishpi: 0.0.63
   glob: 10.2.3
   node-fetch: 2.6.11
   node-localstorage: 2.2.1
